@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class LittleD : MonoBehaviour
 {
-    [SerializeField] private  float speed = 1;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private  float speed = 2;
+    [SerializeField] private float jumpPower = 200;
+    [SerializeField] private LayerMask groundLayer;
+    
 
     Rigidbody2D rg2d;
     Animator animator;
+    const float groundCheckRadius = 0.8f;
     float horizontalValue;
     float runSpeedModidifier = 2;
+    [SerializeField] bool isGround = false;
+    bool jump = false;
+    
     bool isRuning = false;
     bool facingRight = true;
 
@@ -27,19 +35,55 @@ public class LittleD : MonoBehaviour
         {
             isRuning = true;
         }
-       else if (Input.GetKeyDown(KeyCode.LeftShift))
+       else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             isRuning = false;
         }
 
+        if (Input.GetButtonDown("Jump"))
+        {
+            animator.SetBool("Jump",true);
+            jump = true;
+        }
+        else if (Input.GetButtonUp("Jump"))
+        {
+            jump = false;
+        }
+        animator.SetFloat("yVelocity", rg2d.velocity.y);
+        
     }
     private void FixedUpdate()
     {
-        Move(horizontalValue);
+        GroundCheck();
+        Move(horizontalValue,  jump);
     }
-    void Move(float dir)
+
+    void GroundCheck()
     {
-        float xVal = dir * speed * 100 * Time.deltaTime;
+        isGround = false;
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckRadius, groundLayer);
+        if (colliders.Length > 0 )
+        {
+            isGround = true;
+        }
+        animator.SetBool("Jump",!isGround );
+    }
+    void Move(float dir,bool jumpFlag)
+    {
+        #region Jump
+
+
+        if (isGround && jumpFlag)
+        {
+            isGround = false;
+            jumpFlag = false;
+            rg2d.AddForce(new Vector2(0f, jumpPower));
+        }
+        #endregion
+
+        #region MoveandRun
+        float xVal = dir * speed * 100 * Time.fixedDeltaTime;
         if (isRuning)
         {
             xVal *= runSpeedModidifier;
@@ -60,5 +104,6 @@ public class LittleD : MonoBehaviour
             facingRight = true;
         }
         animator.SetFloat("xVelocity",Mathf.Abs(rg2d.velocity.x));
+        #endregion
     }
 }
