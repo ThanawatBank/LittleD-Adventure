@@ -6,8 +6,10 @@ public class LittleD : MonoBehaviour
 {
     [SerializeField] private Transform groundCheck;
     [SerializeField] private  float speed = 2;
-    [SerializeField] private float jumpPower = 200;
+    [SerializeField] private float jumpPower = 7;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private int totalJump;
+    private int availableJump;
     
 
     Rigidbody2D rg2d;
@@ -16,19 +18,22 @@ public class LittleD : MonoBehaviour
     float horizontalValue;
     float runSpeedModidifier = 2;
     [SerializeField] bool isGround = false;
-    bool jump = false;
-    
+
+    bool mutipleJump;
     bool isRuning = false;
     bool facingRight = true;
+    bool coyoteJump;
 
     private void Awake()
     {
+        availableJump = totalJump;
         rg2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
     }
     void Update()
     {
+        
         horizontalValue = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -42,45 +47,82 @@ public class LittleD : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            animator.SetBool("Jump",true);
-            jump = true;
+            Jump();
+      
         }
-        else if (Input.GetButtonUp("Jump"))
-        {
-            jump = false;
-        }
+       
         animator.SetFloat("yVelocity", rg2d.velocity.y);
         
     }
     private void FixedUpdate()
     {
         GroundCheck();
-        Move(horizontalValue,  jump);
+        Move(horizontalValue);
     }
+    void Jump()
+    {
+        
 
+        if(isGround)
+        {
+            mutipleJump = true;
+            availableJump--;
+            rg2d.velocity = Vector2.up * jumpPower;
+            animator.SetBool("Jump", true);
+        }
+        else
+        {
+            if (coyoteJump)
+            {
+                mutipleJump = true;
+                availableJump--;
+                rg2d.velocity = Vector2.up * jumpPower;
+                animator.SetBool("Jump", true);
+            }
+
+            if (mutipleJump && availableJump > 0)
+            {
+                availableJump--;
+                rg2d.velocity = Vector2.up * jumpPower;
+                animator.SetBool("Jump", true);
+            }
+        }
+
+    }
+    private IEnumerator CoyoteJumpDelay()
+    {
+        coyoteJump = true;
+        yield return new WaitForSeconds(0.2f);
+        coyoteJump = false;
+    }
     void GroundCheck()
     {
+        bool wasGround = isGround;
         isGround = false;
 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckRadius, groundLayer);
         if (colliders.Length > 0 )
         {
             isGround = true;
+            if(!wasGround)
+            {
+                availableJump = totalJump;
+                mutipleJump =false;
+            }
+
+        }
+        else
+        {
+            if (wasGround)
+            {
+                StartCoroutine(CoyoteJumpDelay());
+            }
         }
         animator.SetBool("Jump",!isGround );
     }
-    void Move(float dir,bool jumpFlag)
+    void Move(float dir)
     {
-        #region Jump
-
-
-        if (isGround && jumpFlag)
-        {
-            isGround = false;
-            jumpFlag = false;
-            rg2d.AddForce(new Vector2(0f, jumpPower));
-        }
-        #endregion
+        
 
         #region MoveandRun
         float xVal = dir * speed * 100 * Time.fixedDeltaTime;
@@ -106,4 +148,6 @@ public class LittleD : MonoBehaviour
         animator.SetFloat("xVelocity",Mathf.Abs(rg2d.velocity.x));
         #endregion
     }
+    
+  
 }
