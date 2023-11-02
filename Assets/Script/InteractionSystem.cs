@@ -9,6 +9,10 @@ public class InteractionSystem : MonoBehaviour
     [SerializeField] private Transform detectPoint;
     private const float detectRaduis = 0.2f;
     [SerializeField] private LayerMask detectLayer;
+
+    [SerializeField] private GameObject detectObJect;
+    [Header("Others")]
+    [SerializeField] private List<GameObject> pickedItem = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +26,7 @@ public class InteractionSystem : MonoBehaviour
         {
             if (InteractInput())
             {
-                Debug.Log("Sphare");
+                detectObJect.GetComponent<Item>().Interact();
             }
         }
         
@@ -34,11 +38,20 @@ public class InteractionSystem : MonoBehaviour
     }
     bool DetectObject()
     {
-        return Physics2D.OverlapCircle(detectPoint.position,detectRaduis,detectLayer);
+       Collider2D obj = Physics2D.OverlapCircle(detectPoint.position,detectRaduis,detectLayer);
+        if (obj == null)
+        {
+            detectObJect = null;
+            return false;
+        }
+        else
+        {
+            detectObJect = obj.gameObject;
+            return true;
+        }
     }
-    private void OnDrawGizmosSelected()
+   public void PickUpItem(GameObject Item)
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(detectPoint.position,detectRaduis);
+        pickedItem.Add(Item);
     }
 }
