@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class Item : MonoBehaviour
 {
     private enum InteractionType { NONE,PickUp,Examine}
     [SerializeField]private InteractionType Type;
+
+    [SerializeField] private UnityEvent customEvent;
     private void Reset()
     {
         GetComponent<Collider2D>().isTrigger = true;
@@ -28,5 +32,7 @@ public class Item : MonoBehaviour
                 Debug.Log("Null Item");
                 break;
         }
+        customEvent.Invoke();
     }
+    
 }
