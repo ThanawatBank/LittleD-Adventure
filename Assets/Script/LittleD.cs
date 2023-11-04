@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 public class LittleD : MonoBehaviour
@@ -23,6 +24,7 @@ public class LittleD : MonoBehaviour
     bool isRuning = false;
     bool facingRight = true;
     bool coyoteJump;
+    bool isdead =  false;
 
     private void Awake()
     {
@@ -33,6 +35,7 @@ public class LittleD : MonoBehaviour
     }
     void Update()
     {
+        if (isdead) return;
         
         horizontalValue = Input.GetAxisRaw("Horizontal");
 
@@ -110,9 +113,19 @@ public class LittleD : MonoBehaviour
                 mutipleJump =false;
             }
 
+            foreach (var c in colliders)
+            {
+                if (c.tag == "MovingPlatForm")
+                {
+                    transform.parent = c.transform;
+                }
+            }
+
         }
         else
         {
+              transform.parent = null;
+
             if (wasGround)
             {
                 StartCoroutine(CoyoteJumpDelay());
@@ -149,5 +162,20 @@ public class LittleD : MonoBehaviour
         #endregion
     }
     
-  
+    public void Die()
+    {
+        isdead = true;
+        FindObjectOfType<LevelManager>().Restart();
+    }
+   bool CanMove()
+    {
+        bool can = true;
+
+        if (isdead)
+        {
+            can = false;
+        }
+        return can;
+    }
+   
 }

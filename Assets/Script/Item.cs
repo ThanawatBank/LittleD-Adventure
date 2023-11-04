@@ -7,7 +7,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Item : MonoBehaviour
 {
-    private enum InteractionType { NONE,PickUp,Examine}
+    private enum InteractionType { NONE,PickUp,Examine,}
     [SerializeField]private InteractionType Type;
 
     [SerializeField] private UnityEvent customEvent;
@@ -28,11 +28,13 @@ public class Item : MonoBehaviour
             case InteractionType.Examine:
                 Debug.Log("EXAMINE");
                 break;
+           
             default:
                 Debug.Log("Null Item");
                 break;
         }
         customEvent.Invoke();
     }
+   
     
 }

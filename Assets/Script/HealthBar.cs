@@ -18,7 +18,7 @@ public class HealthBar : MonoBehaviour
         life[livesRemaining].enabled = false;
         if (livesRemaining == 0)
         {
-            Debug.Log("Youlose");
+            FindObjectOfType<LittleD>().Die();
         }
     }
     private void Update()
