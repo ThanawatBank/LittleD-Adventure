@@ -11,6 +11,7 @@ public class LittleD : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private int totalJump;
     private int availableJump;
+    [SerializeField] private PlayerData playerData;
     
 
     Rigidbody2D rg2d;
@@ -178,4 +179,13 @@ public class LittleD : MonoBehaviour
         return can;
     }
    
+    public void Addscore()
+    {
+        playerData.score = playerData.score + 1;
+    }
+    public int GetScore()
+    {
+        return playerData.score;
+
+    }
 }
