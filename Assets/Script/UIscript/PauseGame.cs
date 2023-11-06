@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class PauseGame : MonoBehaviour
 {
-    [SerializeField] private static bool GamePause = false;
-    [SerializeField] private GameObject pauseGame;
+    public static bool gamePause;
+    public GameObject pauseGame;
     // Start is called before the first frame update
     void Start()
     {
-
+        pauseGame.SetActive(false);
     }
 
     // Update is called once per frame
@@ -18,7 +18,7 @@ public class PauseGame : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GamePause)
+            if (gamePause)
             {
                 Resume();
             }
@@ -33,13 +33,13 @@ public class PauseGame : MonoBehaviour
     {
         pauseGame.SetActive(false);
         Time.timeScale = 1.0f;
-        GamePause = false;
+        gamePause = false;
     }
     public void Pause()
     {
         pauseGame.SetActive(true);
         Time.timeScale = 1.0f;
-        GamePause = true;
+        gamePause = true;
     }
     public void LoadScene(string sceneName)
     {

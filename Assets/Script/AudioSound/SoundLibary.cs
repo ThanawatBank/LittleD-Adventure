@@ -6,4 +6,5 @@ using UnityEngine;
 public class SoundLibary : ScriptableObject
 {
     public AudioClip BGMtest;
+    public AudioClip shootingSound;
 }
