@@ -5,6 +5,7 @@ using UnityEngine;
 public class FireShooting : MonoBehaviour
 {
     [SerializeField] private float speedFire;
+    [SerializeField] private SoundLibary soundLibary;
 
 
     private void Update()
@@ -21,7 +22,26 @@ public class FireShooting : MonoBehaviour
         if (collision.GetComponent<ShootingAction>())
         {
             collision.GetComponent<ShootingAction>().Action();
+            AudioSource.PlayClipAtPoint(soundLibary.enemydieSound, transform.position);
         }
-        Destroy(gameObject);
+        if (collision.tag == "Enemy")
+        {
+
+            Destroy(gameObject);
+
+        }
+        if (collision.tag == "Wall")
+        {
+
+            Destroy(gameObject);
+
+        }
+        if (collision.tag == "Floor")
+        {
+
+            Destroy(gameObject);
+
+        }
+
     }
 }

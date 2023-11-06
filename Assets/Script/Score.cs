@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Score : MonoBehaviour
 {
+    [SerializeField] private SoundLibary soundLibary;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -11,7 +12,7 @@ public class Score : MonoBehaviour
             Destroy(gameObject);
             LittleD player = GameObject.FindObjectOfType<LittleD>();
             player.Addscore();
-            
+            AudioSource.PlayClipAtPoint(soundLibary.soundCoin, transform.position);
         }
     }
 }

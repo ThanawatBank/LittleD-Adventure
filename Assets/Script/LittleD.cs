@@ -12,6 +12,7 @@ public class LittleD : MonoBehaviour
     [SerializeField] private int totalJump;
     private int availableJump;
     [SerializeField] private PlayerData playerData;
+    [SerializeField] private SoundLibary soundLibary;
     
 
     Rigidbody2D rg2d;
@@ -73,6 +74,7 @@ public class LittleD : MonoBehaviour
             availableJump--;
             rg2d.velocity = Vector2.up * jumpPower;
             animator.SetBool("Jump", true);
+            AudioSource.PlayClipAtPoint(soundLibary.soundJump, transform.position);
         }
         else
         {

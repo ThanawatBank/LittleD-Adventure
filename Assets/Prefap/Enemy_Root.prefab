@@ -111,9 +111,9 @@ GameObject:
   - component: {fileID: 1362752470772985959}
   - component: {fileID: 1362752470772985958}
   - component: {fileID: 4643658653100834472}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -274,6 +274,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  soundLibary: {fileID: 11400000, guid: f336f99242f330941b606d9127b9ce30, type: 2}
 --- !u!1 &1362752470824584290
 GameObject:
   m_ObjectHideFlags: 0

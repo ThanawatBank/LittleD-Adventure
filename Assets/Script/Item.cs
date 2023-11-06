@@ -9,6 +9,7 @@ public class Item : MonoBehaviour
 {
     private enum InteractionType { NONE,PickUp,Examine,}
     [SerializeField]private InteractionType Type;
+    [SerializeField] private SoundLibary soundLibary;
 
     [SerializeField] private UnityEvent customEvent;
     private void Reset()
@@ -24,6 +25,7 @@ public class Item : MonoBehaviour
                 
                 FindObjectOfType<InteractionSystem>().PickUpItem(gameObject);
                 gameObject.SetActive(false);
+                AudioSource.PlayClipAtPoint(soundLibary.gemSound, transform.position);
                 break;
             case InteractionType.Examine:
                 Debug.Log("EXAMINE");
@@ -34,6 +36,8 @@ public class Item : MonoBehaviour
                 break;
         }
         customEvent.Invoke();
+        
+
     }
    
     
