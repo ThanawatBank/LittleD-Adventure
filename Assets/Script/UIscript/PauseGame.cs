@@ -38,7 +38,7 @@ public class PauseGame : MonoBehaviour
     public void Pause()
     {
         pauseGame.SetActive(true);
-        Time.timeScale = 1.0f;
+        Time.timeScale = 0f;
         gamePause = true;
     }
     public void LoadScene(string sceneName)

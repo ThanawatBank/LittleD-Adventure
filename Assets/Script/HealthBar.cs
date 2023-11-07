@@ -7,6 +7,7 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Image[] life;
     [SerializeField] private int livesRemaining;
+    [SerializeField] private SoundLibary soundLibary;
 
     public void Lostlife()
     {
@@ -20,12 +21,16 @@ public class HealthBar : MonoBehaviour
         {
             FindObjectOfType<LittleD>().Die();
         }
+        AudioSource.PlayClipAtPoint(soundLibary.Playerhit, transform.position);
+        
+
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
             Lostlife();
+            
         }
     }
 }

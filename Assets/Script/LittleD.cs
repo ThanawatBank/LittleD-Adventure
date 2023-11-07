@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -76,7 +76,7 @@ public class LittleD : MonoBehaviour
             animator.SetBool("Jump", true);
             AudioSource.PlayClipAtPoint(soundLibary.soundJump, transform.position);
         }
-        else
+        else //กระโดด2ครั้ง
         {
             if (coyoteJump)
             {
@@ -84,6 +84,7 @@ public class LittleD : MonoBehaviour
                 availableJump--;
                 rg2d.velocity = Vector2.up * jumpPower;
                 animator.SetBool("Jump", true);
+                AudioSource.PlayClipAtPoint(soundLibary.soundJump, transform.position);
             }
 
             if (mutipleJump && availableJump > 0)
@@ -91,8 +92,10 @@ public class LittleD : MonoBehaviour
                 availableJump--;
                 rg2d.velocity = Vector2.up * jumpPower;
                 animator.SetBool("Jump", true);
+                AudioSource.PlayClipAtPoint(soundLibary.soundJump, transform.position);
             }
         }
+
 
     }
     private IEnumerator CoyoteJumpDelay()
@@ -141,7 +144,7 @@ public class LittleD : MonoBehaviour
         
 
         #region MoveandRun
-        float xVal = dir * speed * 100 * Time.fixedDeltaTime;
+        float xVal = dir * speed * 50 * Time.fixedDeltaTime;
         if (isRuning)
         {
             xVal *= runSpeedModidifier;

@@ -20,7 +20,7 @@ public class GameWin : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(3);
         }
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - MovingPlatForm
   - Wall
   - Floor
+  - Bullet
   layers:
   - Default
   - TransparentFX

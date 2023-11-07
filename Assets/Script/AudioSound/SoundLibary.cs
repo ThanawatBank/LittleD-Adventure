@@ -11,4 +11,5 @@ public class SoundLibary : ScriptableObject
     public AudioClip soundCoin;
     public AudioClip enemydieSound;
     public AudioClip gemSound;
+    public AudioClip Playerhit;
 }

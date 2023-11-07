@@ -22,12 +22,13 @@ public class FireShooting : MonoBehaviour
         if (collision.GetComponent<ShootingAction>())
         {
             collision.GetComponent<ShootingAction>().Action();
-            AudioSource.PlayClipAtPoint(soundLibary.enemydieSound, transform.position);
+            
         }
         if (collision.tag == "Enemy")
         {
 
             Destroy(gameObject);
+            
 
         }
         if (collision.tag == "Wall")
