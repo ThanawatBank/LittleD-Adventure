@@ -172,6 +172,7 @@ public class LittleD : MonoBehaviour
     {
         isdead = true;
         FindObjectOfType<LevelManager>().Restart();
+        ResetScore();
     }
    bool CanMove()
     {
@@ -187,10 +188,16 @@ public class LittleD : MonoBehaviour
     public void Addscore()
     {
         playerData.score = playerData.score + 1;
+        
+   
     }
     public int GetScore()
     {
         return playerData.score;
-
+       
+    }
+    public void ResetScore()
+    {
+        playerData.score = 0;
     }
 }

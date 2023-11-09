@@ -19,7 +19,10 @@ public class Deadzone : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            LittleD player = GameObject.FindObjectOfType<LittleD>();
+            player.ResetScore();
             FindObjectOfType<LevelManager>().Restart();
+            
         }
     }
 }

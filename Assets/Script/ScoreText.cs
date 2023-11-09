@@ -8,6 +8,7 @@ public class ScoreText : MonoBehaviour
 
     [SerializeField] private TMP_Text m_Text;
     [SerializeField] private PlayerData m_PlayerData;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,5 +19,6 @@ public class ScoreText : MonoBehaviour
     void Update()
     {
         m_Text.text = m_PlayerData.score.ToString();
+        
     }
 }
