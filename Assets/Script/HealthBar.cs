@@ -23,6 +23,7 @@ public class HealthBar : MonoBehaviour
         }
         AudioSource.PlayClipAtPoint(soundLibary.Playerhit, transform.position);
         
+        
 
     }
     private void Update()
