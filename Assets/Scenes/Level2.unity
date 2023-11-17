@@ -654,6 +654,7 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: 6ea60049a394994459360ee8ad84ba99, type: 2}
   soundLibary: {fileID: 11400000, guid: f336f99242f330941b606d9127b9ce30, type: 2}
   isGround: 0
+  pushForce: 50
 --- !u!50 &174989757
 Rigidbody2D:
   serializedVersion: 4
@@ -688,8 +689,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0180763, y: -0.22896647}
-  m_Size: {x: 0.83106685, y: 0.86721945}
+  m_Offset: {x: 0.01807636, y: -0.22896647}
+  m_Size: {x: 0.6075872, y: 0.86721945}
   m_Direction: 0
 --- !u!212 &174989759
 SpriteRenderer:
@@ -751,7 +752,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 174989751}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.32, y: -2.87, z: 0}
+  m_LocalPosition: {x: -1.19, y: -2.87, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

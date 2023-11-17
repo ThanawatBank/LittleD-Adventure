@@ -6,6 +6,7 @@ public class EnemyFly : MonoBehaviour
 {
     [SerializeField] private List<Transform> point;
     [SerializeField] private int nextID = 0;
+    [SerializeField] private GameObject vfx;
     private int idChangeValue = 1;
     private float speed = 2f;
 
@@ -74,6 +75,11 @@ public class EnemyFly : MonoBehaviour
         if (collision.tag == "Player")
         {
             FindObjectOfType<HealthBar>().Lostlife();
+            VFXD();
         }
+    }
+    void VFXD()
+    {
+        Instantiate(vfx, transform.position, transform.rotation);
     }
 }

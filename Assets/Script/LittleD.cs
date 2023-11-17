@@ -6,27 +6,30 @@ using UnityEngine;
 public class LittleD : MonoBehaviour
 {
     [SerializeField] private Transform groundCheck;
-    [SerializeField] private  float speed = 2;
+    [SerializeField] private float speed = 2;
     [SerializeField] private float jumpPower = 7;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private int totalJump;
     private int availableJump;
     [SerializeField] private PlayerData playerData;
     [SerializeField] private SoundLibary soundLibary;
+
+
+
+    private Rigidbody2D rg2d;
+    private Animator animator;
+    private const float groundCheckRadius = 0.8f;
+    private float horizontalValue;
+    private float runSpeedModidifier = 2;
+    [SerializeField] bool isGround = false;
     
 
-    Rigidbody2D rg2d;
-    Animator animator;
-    const float groundCheckRadius = 0.8f;
-    float horizontalValue;
-    float runSpeedModidifier = 2;
-    [SerializeField] bool isGround = false;
-
-    bool mutipleJump;
-    bool isRuning = false;
-    bool facingRight = true;
-    bool coyoteJump;
-    bool isdead =  false;
+    private bool mutipleJump;
+    private bool isRuning = false;
+    private bool facingRight = true;
+    private bool coyoteJump;
+    private bool isdead = false;
+   
 
     private void Awake()
     {
@@ -38,14 +41,14 @@ public class LittleD : MonoBehaviour
     void Update()
     {
         if (isdead) return;
-        
+
         horizontalValue = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             isRuning = true;
         }
-       else if (Input.GetKeyUp(KeyCode.LeftShift))
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             isRuning = false;
         }
@@ -53,11 +56,11 @@ public class LittleD : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             Jump();
-      
+
         }
-       
+
         animator.SetFloat("yVelocity", rg2d.velocity.y);
-        
+
     }
     private void FixedUpdate()
     {
@@ -66,9 +69,9 @@ public class LittleD : MonoBehaviour
     }
     void Jump()
     {
-        
 
-        if(isGround)
+
+        if (isGround)
         {
             mutipleJump = true;
             availableJump--;
@@ -110,13 +113,13 @@ public class LittleD : MonoBehaviour
         isGround = false;
 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckRadius, groundLayer);
-        if (colliders.Length > 0 )
+        if (colliders.Length > 0)
         {
             isGround = true;
-            if(!wasGround)
+            if (!wasGround)
             {
                 availableJump = totalJump;
-                mutipleJump =false;
+                mutipleJump = false;
             }
 
             foreach (var c in colliders)
@@ -130,18 +133,18 @@ public class LittleD : MonoBehaviour
         }
         else
         {
-              transform.parent = null;
+            transform.parent = null;
 
             if (wasGround)
             {
                 StartCoroutine(CoyoteJumpDelay());
             }
         }
-        animator.SetBool("Jump",!isGround );
+        animator.SetBool("Jump", !isGround);
     }
     void Move(float dir)
     {
-        
+
 
         #region MoveandRun
         float xVal = dir * speed * 50 * Time.fixedDeltaTime;
@@ -152,11 +155,11 @@ public class LittleD : MonoBehaviour
         Vector2 targetVelocity = new Vector2(xVal, rg2d.velocity.y);
         rg2d.velocity = targetVelocity;
 
-        
+
 
         if (facingRight && dir < 0)
         {
-            transform.localScale = new Vector3(-1,1, 1);
+            transform.localScale = new Vector3(-1, 1, 1);
             facingRight = false;
         }
         else if (!facingRight && dir > 0)
@@ -164,17 +167,17 @@ public class LittleD : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
             facingRight = true;
         }
-        animator.SetFloat("xVelocity",Mathf.Abs(rg2d.velocity.x));
+        animator.SetFloat("xVelocity", Mathf.Abs(rg2d.velocity.x));
         #endregion
     }
-    
+
     public void Die()
     {
         isdead = true;
         FindObjectOfType<LevelManager>().Restart();
         ResetScore();
     }
-   bool CanMove()
+    bool CanMove()
     {
         bool can = true;
 
@@ -184,20 +187,23 @@ public class LittleD : MonoBehaviour
         }
         return can;
     }
-   
+
     public void Addscore()
     {
         playerData.score = playerData.score + 1;
-        
-   
+
+
     }
     public int GetScore()
     {
         return playerData.score;
-       
+
     }
     public void ResetScore()
     {
         playerData.score = 0;
     }
+    
+    
+
 }

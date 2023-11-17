@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class TrapObject : MonoBehaviour
 {
+    [SerializeField] private GameObject vfx;
     private void Reset()
     {
         GetComponent<BoxCollider2D>().isTrigger = true;
@@ -16,6 +17,12 @@ public class TrapObject : MonoBehaviour
         {
             
             FindObjectOfType<HealthBar>().Lostlife();
+            VFXV();
         }
     }
+    void VFXV()
+    {
+        Instantiate(vfx, transform.position, transform.rotation);
+    }
+
 }

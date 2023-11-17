@@ -10,7 +10,7 @@ public class Shooting : MonoBehaviour
     [SerializeField] private bool canShoot = true;
     [SerializeField] private SoundLibary soundLibary;
     [SerializeField] private float firerate;
-    float nextfire;
+    private float nextfire;
 
     private void Update()
     {

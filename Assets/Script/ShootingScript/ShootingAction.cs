@@ -8,11 +8,17 @@ public class ShootingAction : MonoBehaviour
     [SerializeField] private UnityEvent action;
     [SerializeField] private SoundLibary soundLibary;
     [SerializeField] private float cooldown;
-    float lastshoot;
+    [SerializeField] private GameObject vfx;
+    private float lastshoot;
     public void Action()
     {
         action?.Invoke();
+        VFX();
         AudioSource.PlayClipAtPoint(soundLibary.enemydieSound, transform.position);
+    }
+    void VFX()
+    {
+        Instantiate(vfx,transform.position,transform.rotation);
     }
     
 }

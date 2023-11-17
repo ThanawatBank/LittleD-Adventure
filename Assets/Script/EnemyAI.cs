@@ -9,6 +9,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private int nextID  = 0;
     private int idChangeValue = 1;
     private float speed = 2f;
+    [SerializeField] private GameObject vfx;
 
 
     private void Reset()
@@ -70,12 +71,20 @@ public class EnemyAI : MonoBehaviour
         }
 
     }
+  
+   
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             FindObjectOfType<HealthBar>().Lostlife();
+            VFXS();
+
         }
+    }
+    void VFXS()
+    {
+        Instantiate(vfx, transform.position, transform.rotation);
     }
 
 }
