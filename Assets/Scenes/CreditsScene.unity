@@ -648,7 +648,9 @@ MonoBehaviour:
     TEXT Font BY - Thaleah
 
     BGM by - Music
-    Now - No Copyright Music'
+    Now - No Copyright Music
+
+    VFX  by - JMO Assets'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ddd32fb880c1fec45b907bcc3ff0ef01, type: 2}
   m_sharedMaterial: {fileID: -5890520199688319356, guid: ddd32fb880c1fec45b907bcc3ff0ef01, type: 2}
